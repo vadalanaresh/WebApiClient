@@ -21,6 +21,8 @@ namespace WebApiClient
         {
             Console.WriteLine("================Sync Get call==========================");
             GetPost();
+            Console.WriteLine("================Sync Get call(one Record)==========================");
+            GetPostById();
             Console.WriteLine("================Sync post call==========================");
             PostData();
             Console.ReadLine();
@@ -54,6 +56,16 @@ namespace WebApiClient
             {
                 Console.WriteLine("Exception " + e.Message);
 
+            }
+        }
+
+        public static void GetPostById()
+        {
+            using(var httpClinet = GetHttpClinet())
+            {
+                var response = httpClinet.GetAsync("/posts/1");
+                var item = response.Result.Content.ReadAsAsync<Post>().Result;
+                Console.WriteLine($"Id: {item.ID} Title: {item.Title} Author: {item.Author}");
             }
         }
 
